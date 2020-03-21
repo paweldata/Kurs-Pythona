@@ -84,28 +84,34 @@ def generateKeys(length):
         file.write(str(prime1 * prime2) + ' ' + str(d))
 
 
-def encrypt(string):
-    with open('key.pub', 'r') as file:
-        number, key = file.read().split(' ')
+def encrypt(string, number, key):
+    length = len(bin(int(number))[2::]) - 1
 
+    # convert to binary string
     binaryCode = ''.join('{0:08b}'.format(ord(char), 'b') for char in string)
-    return pow(int(binaryCode, 2), int(key), int(number))
+
+    # split to parts with length <  number
+    binaryCode = [binaryCode[i: i + length] for i in range(0, len(binaryCode), length)]
+
+    return ' '.join(str(pow(int(code, 2), int(key), int(number))) for code in binaryCode)
 
 
-def decrypt(string):
-    with open('key.prv', 'r') as file:
-        number, key = file.read().split(' ')
+def decrypt(string, number, key):
+    length = len(bin(int(number))[2::]) - 1
+    binaryCode = [str(bin(pow(int(code), int(key), int(number)))[2::]) for code in string.split(' ')]
 
-    binaryCode = pow(int(string), int(key), int(number))
-    binaryCode = str(bin(binaryCode))[2::]
-    if len(binaryCode) % 8 != 0:
-        binaryCode = '0' * (8 - (len(binaryCode) % 8)) + binaryCode
+    # add char '0'
+    for i, code in enumerate(binaryCode):
+        if i < len(binaryCode) - 1:
+            binaryCode[i] = '0' * (length - len(code)) + code
 
-    answer = ''
-    for i in range(0, len(binaryCode), 8):
-        answer += chr(int(binaryCode[i: i + 8], 2))
+    # add char '0' to last part
+    if sum(len(code) for code in binaryCode) % 8 > 0:
+        binaryCode[-1] = '0' * (8 - (sum(len(code) for code in binaryCode) % 8)) + binaryCode[-1]
 
-    return answer
+    binaryCode = ''.join(binaryCode)
+
+    return ''.join(chr(int(binaryCode[i: i + 8], 2)) for i in range(0, len(binaryCode), 8))
 
 
 def errorInfo():
@@ -120,12 +126,22 @@ def main():
         errorInfo()
         exit()
 
-    if sys.argv[1] == '--gen-keys':
+    elif sys.argv[1] == '--gen-keys':
         generateKeys(int(sys.argv[2]))
     elif sys.argv[1] == '--encrypt':
-        print(encrypt(sys.argv[2]))
+        try:
+            with open('key.pub', 'r') as file:
+                number, key = file.read().split(' ')
+            print(encrypt(' '.join([string for i, string in enumerate(sys.argv) if i >= 2]), number, key))
+        except IOError:
+            print("File key.pub not exists")
     elif sys.argv[1] == '--decrypt':
-        print(decrypt(sys.argv[2]))
+        try:
+            with open('key.prv', 'r') as file:
+                number, key = file.read().split(' ')
+            print(decrypt(' '.join([string for i, string in enumerate(sys.argv) if i >= 2]), number, key))
+        except IOError:
+            print("File key.prv not exists")
     else:
         errorInfo()
 
