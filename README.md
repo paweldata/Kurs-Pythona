@@ -8,3 +8,7 @@ Rozwiązania zadań z kursu języka programowania python na kierunku informatyka
 - Szukanie takich samych pików
 - Kodawanie RSA
 - Test Millera-Rabina (liczby pierwsze)
+
+### Lista 3
+- listy składane (list comprehension)
+- skladnia funkcjonalna (filter, map, lambda)
