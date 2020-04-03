@@ -12,3 +12,9 @@ Rozwiązania zadań z kursu języka programowania python na kierunku informatyka
 ### Lista 3
 - listy składane (list comprehension)
 - skladnia funkcjonalna (filter, map, lambda)
+
+### Lista 4
+- Dekorator
+- Implementacje drzewa
+- Przeciążenie funkcji
+- Szybkie mnożenie (transformata Fouriera)
