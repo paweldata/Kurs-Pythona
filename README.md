@@ -18,3 +18,7 @@ Rozwiązania zadań z kursu języka programowania python na kierunku informatyka
 - Implementacje drzewa
 - Przeciążenie funkcji
 - Szybkie mnożenie (transformata Fouriera)
+
+### Lista 5
+- Wstęp do uczenia maszynowego
+- Regresja liniowa
