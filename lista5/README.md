@@ -1,7 +1,7 @@
 # Kurs-Pythona
 ## Lista 5
 
-### Zadanie 2
+### Zadanie 1
 Program na podstawie oceny filmów stara się przewidzieć ocenę innych użytkowników
 
 ### Zadanie 2
