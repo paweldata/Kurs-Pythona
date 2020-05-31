@@ -22,3 +22,7 @@ Rozwiązania zadań z kursu języka programowania python na kierunku informatyka
 ### Lista 5
 - Wstęp do uczenia maszynowego
 - Regresja liniowa
+
+### Lista 6
+- Sieci neuronowe
+- Propagacja wsteczna
